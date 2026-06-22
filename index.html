@@ -63,7 +63,6 @@
 
   .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);}
   .reveal.in{opacity:1;transform:translateY(0);}
-  .reveal-stagger > * { transition-delay: calc(var(--i, 0) * 110ms); }
 
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
@@ -101,7 +100,7 @@
     box-shadow:0 6px 24px rgba(42,27,18,0.07);
   }
   header .wrap{display:flex;align-items:center;justify-content:space-between;}
-  .logo{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-weight:700;font-size:1.25rem;color:var(--bg-light, var(--ink));}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-weight:700;font-size:1.25rem;}
   header:not(.solid) .logo{color:#FFFBF5;}
   header.solid .logo{color:var(--ink);}
   .logo-img{width:32px;height:32px;object-fit:contain;}
@@ -113,7 +112,6 @@
   nav.links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:1.5px;background:var(--primary);transition:width .25s;}
   nav.links a:hover{color:var(--primary);}
   nav.links a:hover::after{width:100%;}
-  .nav-cta{display:none;}
   @media (max-width:860px){ nav.links{display:none;} }
 
   .btn{
@@ -314,7 +312,7 @@
   .exp-item h4{color:#FFFBF5;font-size:1.08rem;margin-bottom:6px;}
   .exp-item p{color:rgba(255,251,245,0.62);font-size:0.92rem;max-width:380px;}
 
-  /* FIXED: Mobile overlap issue solved */
+  /* MOBILE FIX - YE SAB SE IMPORTANT HAI */
   @media (max-width:768px){
     .exp-grid{grid-template-columns:1fr !important;}
     .exp-list{order:2;}
@@ -332,185 +330,6 @@
     .exp-item p{font-size:0.85rem;}
     .exp-icon{width:40px;height:40px;font-size:1.1rem;}
   }
-
-  .exp-visual{position:relative;border-radius:4px;overflow:hidden;}
-  .exp-visual img{width:100%;height:100%;object-fit:cover;min-height:340px;}
-  .exp-visual.img-fallback{background:linear-gradient(135deg,#3a1c08,#0e0805);min-height:340px;}
-  .counter-card{
-    position:absolute;bottom:0;left:0;right:0;
-    background:rgba(23,14,9,0.78); backdrop-filter:blur(6px);
-    padding:26px 28px;
-  }
-  .counter-card .num{
-    font-family:'Playfair Display',serif;font-weight:800;color:var(--gold);
-    font-size:2.4rem; line-height:1;
-  }
-  .counter-card .label{font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,251,245,0.7);margin-top:4px;}
-
-  .reviews-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:50px;flex-wrap:wrap;gap:20px;}
-  .reviews-head h2{font-size:clamp(2rem,4vw,2.7rem);margin-top:14px;}
-  .review-track-wrap{overflow:hidden;position:relative;}
-  .review-track{display:flex;gap:24px;transition:transform .6s cubic-bezier(.2,.7,.2,1);}
-  .review-card{
-    flex:0 0 calc(33.333% - 16px);
-    background:var(--bg-2);
-    border-radius:4px;
-    padding:30px;
-    border:1px solid var(--line);
-  }
-  @media (max-width:900px){ .review-card{flex:0 0 calc(50% - 12px);} }
-  @media (max-width:600px){ .review-card{flex:0 0 100%;} }
-  .review-stars{color:var(--gold);font-size:0.9rem;letter-spacing:2px;margin-bottom:14px;}
-  .review-card p{font-size:0.96rem;color:var(--ink);margin-bottom:20px;min-height:72px;}
-  .reviewer{display:flex;align-items:center;gap:12px;}
-  .avatar{
-    width:40px;height:40px;border-radius:50%;
-    background:var(--primary);color:#fff;
-    display:flex;align-items:center;justify-content:center;
-    font-weight:600;font-size:0.86rem;font-family:'Playfair Display',serif;
-  }
-  .reviewer .who b{display:block;font-size:0.88rem;}
-  .reviewer .who span{font-size:0.76rem;color:var(--ink-soft);}
-  .review-dots{display:flex;gap:8px;margin-top:34px;justify-content:center;}
-  .review-dots button{width:8px;height:8px;border-radius:50%;background:var(--line);transition:background .25s,width .25s;}
-  .review-dots button.active{background:var(--primary);width:22px;border-radius:4px;}
-
-  .reserve{background:linear-gradient(180deg,#1A0F08, #2A1608); color:#FFFBF5; position:relative; overflow:hidden;}
-  .reserve .wrap{display:grid;grid-template-columns:0.9fr 1.1fr;gap:70px;align-items:center;}
-  @media (max-width:900px){ .reserve .wrap{grid-template-columns:1fr;gap:46px;} }
-  .reserve-info .eyebrow{color:var(--gold);} .reserve-info .eyebrow::before{background:var(--gold);}
-  .reserve-info h2{color:#FFFBF5;font-size:clamp(2rem,4.4vw,3rem);margin:14px 0 18px;}
-  .reserve-info p{color:rgba(255,251,245,0.7);max-width:380px;margin-bottom:20px;}
-  .reserve-info .note{font-size:0.85rem;color:var(--gold);font-weight:600;}
-
-  .reserve-form{
-    background:rgba(255,251,245,0.06);
-    border:1px solid rgba(255,251,245,0.14);
-    border-radius:6px;
-    padding:36px;
-    position:relative;
-  }
-  .reserve-form.popped{animation:pop-card .4s ease;}
-  @keyframes pop-card{ 0%{transform:scale(1);} 40%{transform:scale(1.015);} 100%{transform:scale(1);} }
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
-  @media (max-width:480px){ .form-row{grid-template-columns:1fr;} }
-  .field label{display:block;font-size:0.74rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,251,245,0.55);margin-bottom:8px;}
-  .field input, .field select{
-    width:100%;padding:12px 14px;background:rgba(255,251,245,0.05);
-    border:1px solid rgba(255,251,245,0.18); border-radius:3px;
-    color:#FFFBF5; font-family:'Poppins',sans-serif; font-size:0.92rem;
-    outline:none; transition:border-color .25s, background .25s;
-  }
-  .field input:focus, .field select:focus{border-color:var(--primary-bright); background:rgba(255,251,245,0.09);}
-  .field select option{color:#000;}
-  .reserve-form .btn-primary{width:100%;justify-content:center;margin-top:6px;}
-  .confetti-piece{position:absolute;top:0;border-radius:1px;pointer-events:none;}
-
-  footer{background:var(--char);color:rgba(255,251,245,0.7);padding:64px 0 36px;}
-  .footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,251,245,0.12);}
-  .footer-logo{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-weight:700;font-size:1.3rem;color:#FFFBF5;}
-  .footer-logo img{width:32px;height:32px;}
-  .footer-cols{display:flex;gap:60px;flex-wrap:wrap;}
-  .footer-col h5{color:#FFFBF5;font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;}
-  .footer-col p, .footer-col a{display:block;font-size:0.9rem;margin-bottom:8px;color:rgba(255,251,245,0.65);transition:color .2s;}
-  .footer-col a:hover{color:var(--gold);}
-  .footer-bottom{display:flex;justify-content:space-between;padding-top:26px;font-size:0.78rem;color:rgba(255,251,245,0.4);flex-wrap:wrap;gap:10px;}
-  .socials{display:flex;gap:16px;}
-  .socials a{color:rgba(255,251,245,0.6);}
-  .socials a:hover{color:var(--gold);}
-</style>
-</head>
-<body>
-
-<header id="header">
-  <div class="wrap">
-    <a class="logo" href="#top">
-      <img src="images/logo.png" alt="The Urban Grill Logo" class="logo-img">
-      The Urban Grill
-    </a>
-    <nav class="links">
-      <a href="#story">Our Story</a>
-      <a href="#dishes">Menu</a>
-      <a href="#experience">Experience</a>
-      <a href="#reviews">Reviews</a>
-    </nav>
-    <a href="#reserve" class="btn btn-primary">Reserve a Table</a>
-  </div>
-</header>
-
-<section class="hero" id="top">
-  <div class="hero-bg" id="heroBg"></div>
-  <div class="embers" id="embers"></div>
-  <div class="wrap hero-content">
-    <span class="eyebrow">Clifton, Karachi · Wood-Fired Since 2021</span>
-    <h1>Where Every Bite<br>Tells a <em>Story</em></h1>
-    <p class="sub">Wood-fired flavors, curated ambiance, and service that feels like family. From first date to 50th anniversary — make it memorable here.</p>
-    <div class="hero-btns">
-      <a href="#reserve" class="btn btn-primary">Reserve a Table →</a>
-      <a href="#dishes" class="btn btn-ghost">Explore Menu ↓</a>
-    </div>
-  </div>
-  <div class="scroll-cue"><span class="line"></span> Scroll</div>
-</section>
-
-<section class="section" id="story">
-  <div class="wrap">
-   :last-child{margin-bottom:0;}
-  .dish.flip{grid-template-columns:1fr 1fr;}
-  .dish.flip .dish-photo{order:2;}
-  .dish.flip .dish-text{order:1;}
-  @media (max-width:860px){
-    .dish, .dish.flip{grid-template-columns:1fr;}
-    .dish.flip .dish-photo, .dish.flip .dish-text{order:initial;}
-  }
-  .dish-photo{
-    position:relative;border-radius:4px;overflow:hidden;aspect-ratio:5/4;
-    box-shadow:0 24px 48px -16px rgba(42,27,18,0.28);
-    perspective:900px;
-  }
-  .dish-photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1);}
-  .dish-photo:hover img{transform:scale(1.06);}
-  .dish-photo.img-fallback{background:linear-gradient(135deg,#C2410C22,#16653422);}
-  .price-tag{
-    position:absolute;top:18px;right:18px;
-    background:var(--char); color:#FFFBF5;
-    font-family:'Playfair Display',serif;font-weight:700;font-size:1rem;
-    padding:8px 16px;border-radius:2px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.25);
-  }
-  .steak-card{ transform-style:preserve-3d; transition:transform .35s ease; }
-  .steak-tooltip{
-    position:absolute;bottom:18px;left:18px;
-    background:var(--accent);color:#fff;font-size:0.74rem;font-weight:600;
-    padding:8px 14px;border-radius:2px;letter-spacing:0.02em;
-    opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s;
-  }
-  .dish-photo:hover .steak-tooltip{opacity:1;transform:translateY(0);}
-  .dish-text .num{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold);font-size:1rem;display:block;margin-bottom:8px;}
-  .dish-text h3{font-size:1.7rem;margin-bottom:14px;}
-  .dish-text p{color:var(--ink-soft);max-width:420px;}
-
-  .experience{background:var(--char);color:#FFFBF5;}
-  .experience .eyebrow{color:var(--gold);}
-  .experience .eyebrow::before{background:var(--gold);}
-  .experience h2{color:#FFFBF5;font-size:clamp(2rem,4vw,2.7rem);margin:14px 0 60px;max-width:560px;}
-  .exp-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;}
-  @media (max-width:900px){ .exp-grid{grid-template-columns:1fr;} }
-  .exp-list{display:flex;flex-direction:column;gap:0;}
-  .exp-item{
-    display:flex;gap:20px;padding:26px 0;border-bottom:1px solid rgba(255,251,245,0.12);
-    opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;
-  }
-  .exp-item.in{opacity:1;transform:translateY(0);}
-  .exp-item:first-child{padding-top:0;}
-  .exp-icon{
-    width:46px;height:46px;flex:none;border-radius:50%;
-    background:rgba(226,88,15,0.14);
-    display:flex;align-items:center;justify-content:center;color:var(--primary-bright);
-    font-size:1.2rem;
-  }
-  .exp-item h4{color:#FFFBF5;font-size:1.08rem;margin-bottom:6px;}
-  .exp-item p{color:rgba(255,251,245,0.62);font-size:0.92rem;max-width:380px;}
 
   .exp-visual{position:relative;border-radius:4px;overflow:hidden;}
   .exp-visual img{width:100%;height:100%;object-fit:cover;min-height:340px;}
@@ -720,12 +539,12 @@
     <h2>Dinner, with the kitchen <em>in plain sight</em></h2>
     <div class="exp-grid">
       <div class="exp-list" id="expList">
-        <div class="exp-item"><div class="exp-icon">🔥</
-                      <div class="exp-item"><div class="exp-icon">🎧</div><div><h4>Sound of Sizzle</h4><p>Open kitchen, real sizzle. It's dinner-table ASMR — no playlist needed.</p></div></div>
+        <div class="exp-item"><div class="exp-icon">🔥</div><div><h4>Live Fire Kitchen</h4><p>Watch our chefs work the flames. Wood-fired pizzas, charcoal kebabs, and sizzling platters straight from grill to table.</p></div></div>
+        <div class="exp-item"><div class="exp-icon">🎧</div><div><h4>Sound of Sizzle</h4><p>Open kitchen, real sizzle. It's dinner-table ASMR — no playlist needed.</p></div></div>
         <div class="exp-item"><div class="exp-icon">🚪</div><div><h4>Private Pod Dining</h4><p>Four soundproof pods, built for proposals and business deals alike.</p></div></div>
       </div>
       <div class="exp-visual">
-        <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80" alt="Chef working the open grill" onerror="this.parentElement.classList.add('img-fallback'); this.remove();">
+                <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80" alt="Chef working the open grill" onerror="this.parentElement.classList.add('img-fallback'); this.remove();">
         <div class="counter-card">
           <div class="num" id="counter">0</div>
           <div class="label">Guests Served Today</div>
@@ -760,7 +579,6 @@
             <div class="avatar">FK</div>
             <div class="who"><b>Fahad K.</b><span>Clifton, Karachi</span></div>
           </div>
-        </div>
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
           <p>"That truffle pizza... I'm still thinking about it 3 days later. Worth every rupee."</p>
@@ -770,7 +588,6 @@
           </div>
         </div>
       </div>
-    </div>
     <div class="review-dots" id="reviewDots"></div>
   </div>
 </section>
@@ -968,6 +785,11 @@ if(track && dots){
       dot.classList.toggle('active', i === currentSlide);
     });
   }
+
+  setInterval(() => {
+    currentSlide = (currentSlide + 1) % cards;
+    goToSlide(currentSlide);
+  }, 5000);
 }
 
 // Reserve form confetti
@@ -1004,4 +826,4 @@ document.head.appendChild(style);
 </script>
 
 </body>
-      </html>
+</html>
