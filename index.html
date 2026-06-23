@@ -103,7 +103,13 @@
   .logo{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-weight:700;font-size:1.25rem;}
   header:not(.solid) .logo{color:#FFFBF5;}
   header.solid .logo{color:var(--ink);}
-  .logo-img{width:32px;height:32px;object-fit:contain;}
+  .logo-img{
+    width:28px;height:28px;object-fit:contain;flex:none;
+    display:inline-block;
+  }
+  .logo-img[src="images/logo.png"]{
+    /* local file — trust it exists */
+  }
 
   nav.links{display:flex;gap:34px;font-size:0.92rem;font-weight:500;}
   header:not(.solid) nav.links a{color:rgba(255,251,245,0.88);}
@@ -224,27 +230,91 @@
   .story-text p{color:var(--ink-soft);font-size:1.02rem;margin-bottom:18px;max-width:480px;}
   .rule-line{font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;color:var(--accent);margin-top:22px;border-left:3px solid var(--accent);padding-left:16px;}
 
-  .split-photo{position:relative;border-radius:4px;overflow:hidden;aspect-ratio:4/5;}
-  .split-photo .half{position:absolute;top:0;height:100%;width:50%;overflow:hidden;}
-  .split-photo .half img{height:100%;width:200%;object-fit:cover;}
-  .split-photo .half.left{left:0;}
-  .split-photo .half.left img{filter:grayscale(1) contrast(1.05);transition:filter 1.2s ease;}
-  .split-photo .half.right{left:50%;}
-  .split-photo .half.right img{margin-left:-100%;}
-  .split-photo.in .half.left img{filter:grayscale(0);}
-  .split-photo .divider-tag{
-    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-    background:var(--char); color:#FFFBF5; font-size:0.68rem; letter-spacing:0.15em;
-    padding:8px 12px; border-radius:2px; text-transform:uppercase; z-index:3;
-    box-shadow:0 6px 18px rgba(0,0,0,0.25);
+  .story-photo{border-radius:4px;overflow:hidden;aspect-ratio:4/5;position:relative;}
+  .story-photo-inner{position:relative;width:100%;height:100%;}
+  .story-photo-inner img{
+    width:100%;height:100%;object-fit:cover;
+    transition:opacity .5s ease, transform .6s ease;
+  }
+  .story-photo-inner img.fade-out{opacity:0;transform:scale(1.04);}
+  .story-photo-tag{
+    position:absolute;bottom:18px;left:18px;
+    background:var(--char);color:#FFFBF5;
+    font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;
+    padding:8px 14px;border-radius:2px;z-index:3;
+    box-shadow:0 6px 18px rgba(0,0,0,0.3);
+    transition:opacity .3s ease;
+    font-family:'Poppins',sans-serif;font-weight:600;
   }
 
-  .timeline{display:flex;gap:0;margin-top:46px;border-top:1px solid var(--line);padding-top:28px;flex-wrap:wrap;}
-  .timeline .tick{flex:1;min-width:120px;opacity:1;transform:translateX(0);transition:opacity .6s ease, transform .6s ease;}
-  .timeline .tick:nth-child(1){transition-delay:0ms;}
-  .timeline .tick:nth-child(2){transition-delay:120ms;}
-  .timeline .tick:nth-child(3){transition-delay:240ms;}
-  .timeline .tick:nth-child(4){transition-delay:360ms;}
+  /* ===== TIMELINE INTERACTIVE SLIDER ===== */
+  .timeline-slider{
+    margin-top:46px;
+    border-top:1px solid var(--line);
+    padding-top:28px;
+  }
+  .timeline-track{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:20px;
+  }
+  .tl-arrow{
+    width:36px;height:36px;border-radius:50%;
+    border:1.5px solid var(--line);
+    background:none;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1rem;color:var(--ink-soft);
+    cursor:pointer;flex:none;
+    transition:border-color .2s, color .2s, background .2s;
+  }
+  .tl-arrow:hover:not(:disabled){
+    border-color:var(--primary);color:var(--primary);background:rgba(194,65,12,0.06);
+  }
+  .tl-arrow:disabled{opacity:0.3;cursor:default;}
+  .tl-years{
+    display:flex;gap:0;flex:1;position:relative;
+  }
+  .tl-year-btn{
+    flex:1;text-align:center;
+    font-family:'Playfair Display',serif;font-weight:700;
+    font-size:0.95rem;color:var(--ink-soft);
+    padding:6px 4px;
+    cursor:pointer;
+    position:relative;
+    transition:color .25s;
+  }
+  .tl-year-btn.active{color:var(--primary);}
+  .tl-year-btn::after{
+    content:"";position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);
+    width:0;height:2px;background:var(--primary);
+    transition:width .3s ease;border-radius:2px;
+  }
+  .tl-year-btn.active::after{width:60%;}
+  .tl-content{
+    min-height:52px;
+    position:relative;overflow:hidden;
+  }
+  .tl-slide{
+    position:absolute;top:0;left:0;width:100%;
+    opacity:0;transform:translateX(30px);
+    transition:opacity .35s ease, transform .35s ease;
+    pointer-events:none;
+  }
+  .tl-slide.active{
+    opacity:1;transform:translateX(0);
+    position:relative;pointer-events:auto;
+  }
+  .tl-slide.exit-left{
+    opacity:0;transform:translateX(-30px);
+  }
+  .tl-slide .year-label{
+    font-family:'Playfair Display',serif;font-weight:700;
+    color:var(--primary);font-size:1.6rem;margin-bottom:4px;
+  }
+  .tl-slide .desc{
+    font-size:0.9rem;color:var(--ink-soft);line-height:1.6;
+  }
 
   .dishes-head{text-align:center;max-width:560px;margin:0 auto 70px;}
   .dishes-head h2{font-size:clamp(2rem,4vw,2.7rem);margin-top:14px;}
@@ -309,21 +379,12 @@
   .exp-item h4{color:#FFFBF5;font-size:1.08rem;margin-bottom:6px;}
   .exp-item p{color:rgba(255,251,245,0.62);font-size:0.92rem;max-width:380px;}
 
-  /* MOBILE FIX - YE SAB SE IMPORTANT HAI */
   @media (max-width:768px){
     .exp-grid{grid-template-columns:1fr !important;}
     .exp-list{order:2;}
     .exp-visual{order:1;}
-    .exp-item{
-      flex-direction:row;
-      align-items:flex-start;
-    }
-    .exp-item h4{
-      font-size:1rem;
-      line-height:1.3;
-      position:relative;
-      z-index:1;
-    }
+    .exp-item{flex-direction:row;align-items:flex-start;}
+    .exp-item h4{font-size:1rem;line-height:1.3;position:relative;z-index:1;}
     .exp-item p{font-size:0.85rem;}
     .exp-icon{width:40px;height:40px;font-size:1.1rem;}
   }
@@ -420,7 +481,7 @@
 <header id="header">
   <div class="wrap">
     <a class="logo" href="#top">
-      <img src="images/logo.png" alt="The Urban Grill Logo" class="logo-img">
+      <img src="images/logo.png" alt="" class="logo-img" onerror="this.style.display='none'">
       The Urban Grill
     </a>
     <nav class="links">
@@ -457,20 +518,52 @@
         <p>Founded in 2021 by two chef brothers, The Urban Grill grew out of childhood memories of Sunday BBQ in the backyard. We left five-star hotel kitchens to build something simpler: a place where quality meets comfort.</p>
         <p>Today we feed 300+ guests a day, and we run on one rule — if we won't eat it, we won't serve it.</p>
         <p class="rule-line">"If we won't eat it, we won't serve it."</p>
-        <div class="timeline" id="timeline">
-          <div class="tick"><div class="year">2021</div><div class="desc">First flame lit in Clifton</div></div>
-          <div class="tick"><div class="year">2022</div><div class="desc">100 covers a night, regularly</div></div>
-          <div class="tick"><div class="year">2024</div><div class="desc">Private pods & live-fire grill added</div></div>
-          <div class="tick"><div class="year">2026</div><div class="desc">300+ guests served, daily</div></div>
+        <!-- INTERACTIVE TIMELINE SLIDER -->
+        <div class="timeline-slider" id="timelineSlider">
+          <div class="timeline-track">
+            <button class="tl-arrow" id="tlPrev" disabled>←</button>
+            <div class="tl-years">
+              <button class="tl-year-btn active" data-idx="0">2021</button>
+              <button class="tl-year-btn" data-idx="1">2022</button>
+              <button class="tl-year-btn" data-idx="2">2023</button>
+              <button class="tl-year-btn" data-idx="3">2024</button>
+              <button class="tl-year-btn" data-idx="4">2025</button>
+              <button class="tl-year-btn" data-idx="5">2026</button>
+            </div>
+            <button class="tl-arrow" id="tlNext">→</button>
+          </div>
+          <div class="tl-content">
+            <div class="tl-slide active">
+              <div class="year-label">2021</div>
+              <div class="desc">First flame lit in Clifton — two brothers, one grill, zero shortcuts.</div>
+            </div>
+            <div class="tl-slide">
+              <div class="year-label">2022</div>
+              <div class="desc">100 covers a night, regularly — word spread fast in Karachi.</div>
+            </div>
+            <div class="tl-slide">
+              <div class="year-label">2023</div>
+              <div class="desc">Menu expanded with new wood-fired specials — truffle pizza became a city favourite.</div>
+            </div>
+            <div class="tl-slide">
+              <div class="year-label">2024</div>
+              <div class="desc">Private pods & live-fire grill added — the experience leveled up.</div>
+            </div>
+            <div class="tl-slide">
+              <div class="year-label">2025</div>
+              <div class="desc">Rated #1 steakhouse in Karachi — 4.9★ on Google with 2,000+ reviews.</div>
+            </div>
+            <div class="tl-slide">
+              <div class="year-label">2026</div>
+              <div class="desc">300+ guests served daily — and we still won't cut corners.</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="split-photo reveal" id="splitPhoto">
-        <div class="divider-tag">2021 → 2026</div>
-        <div class="half left">
-          <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=900&q=80" alt="The brothers in the kitchen, early days" onerror="this.parentElement.parentElement.classList.add('img-fallback'); this.remove();">
-        </div>
-        <div class="half right">
-          <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=900&q=80" alt="The team today" onerror="this.remove();">
+      <div class="story-photo reveal" id="storyPhoto">
+        <div class="story-photo-inner">
+          <img id="storyImg" src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=900&q=80" alt="2021 - First flame lit">
+          <div class="story-photo-tag" id="storyTag">2021 — First Flame</div>
         </div>
       </div>
     </div>
@@ -493,7 +586,7 @@
 
     <div class="dish reveal">
       <div class="dish-photo">
-        <img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=80" alt="48-hour truffle pizza, top-down, cheese pull" onerror="this.parentElement.classList.add('img-fallback'); this.remove();">
+        <img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=80" alt="48-hour truffle pizza" onerror="this.parentElement.classList.add('img-fallback'); this.remove();">
         <span class="price-tag">₹1,499</span>
       </div>
       <div class="dish-text">
@@ -518,7 +611,7 @@
 
     <div class="dish reveal">
       <div class="dish-photo">
-        <img src="https://images.unsplash.com/photo-1624353365286-3f8d62daad51?auto=format&fit=crop&w=900&q=80" alt="Chocolate lava cake cracked open, lava flowing" onerror="this.parentElement.classList.add('img-fallback'); this.remove();">
+        <img src="https://images.unsplash.com/photo-1624353365286-3f8d62daad51?auto=format&fit=crop&w=900&q=80" alt="Chocolate lava cake" onerror="this.parentElement.classList.add('img-fallback'); this.remove();">
         <span class="price-tag">₹599</span>
       </div>
       <div class="dish-text">
@@ -536,12 +629,30 @@
     <h2>Dinner, with the kitchen <em>in plain sight</em></h2>
     <div class="exp-grid">
       <div class="exp-list" id="expList">
-        <div class="exp-item"><div class="exp-icon">🔥</div><div><h4>Live Fire Kitchen</h4><p>Watch our chefs work the flames. Wood-fired pizzas, charcoal kebabs, and sizzling platters straight from grill to table.</p></div></div>
-        <div class="exp-item"><div class="exp-icon">🎧</div><div><h4>Sound of Sizzle</h4><p>Open kitchen, real sizzle. It's dinner-table ASMR — no playlist needed.</p></div></div>
-        <div class="exp-item"><div class="exp-icon">🚪</div><div><h4>Private Pod Dining</h4><p>Four soundproof pods, built for proposals and business deals alike.</p></div></div>
+        <div class="exp-item">
+          <div class="exp-icon">🔥</div>
+          <div>
+            <h4>Live Fire Kitchen</h4>
+            <p>Watch our chefs work the flames. Wood-fired pizzas, charcoal kebabs, and sizzling platters straight from grill to table.</p>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-icon">🎧</div>
+          <div>
+            <h4>Sound of Sizzle</h4>
+            <p>Open kitchen, real sizzle. It's dinner-table ASMR — no playlist needed.</p>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-icon">🚪</div>
+          <div>
+            <h4>Private Pod Dining</h4>
+            <p>Four soundproof pods, built for proposals and business deals alike.</p>
+          </div>
+        </div>
       </div>
       <div class="exp-visual">
-                <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80" alt="Chef working the open grill" onerror="this.parentElement.classList.add('img-fallback'); this.remove();">
+        <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80&fm=jpg" alt="Chef working the open grill" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#3a1c08,#1a0a04)';this.remove();">
         <div class="counter-card">
           <div class="num" id="counter">0</div>
           <div class="label">Guests Served Today</div>
@@ -561,6 +672,8 @@
     </div>
     <div class="review-track-wrap">
       <div class="review-track" id="reviewTrack">
+
+        <!-- REVIEW 1 -->
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
           <p>"Best steak in K-town, hands down. That medium rare was perfection. Ambiance 10/10."</p>
@@ -569,6 +682,8 @@
             <div class="who"><b>Ayesha S.</b><span>DHA, Karachi</span></div>
           </div>
         </div>
+
+        <!-- REVIEW 2 -->
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
           <p>"Took my parents for anniversary. The private pod was so cozy and service was unreal."</p>
@@ -576,20 +691,29 @@
             <div class="avatar">FK</div>
             <div class="who"><b>Fahad K.</b><span>Clifton, Karachi</span></div>
           </div>
+        </div>
+
+        <!-- REVIEW 3 -->
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
           <p>"That truffle pizza... I'm still thinking about it 3 days later. Worth every rupee."</p>
           <div class="reviewer">
             <div class="avatar">ZR</div>
             <div class="who"><b>Zara R.</b><span>Bahadurabad, Karachi</span></div>
-          </div>       
-            <div class="review-card">
+          </div>
+        </div>
+
+        <!-- REVIEW 4 -->
+        <div class="review-card">
           <div class="review-stars">★★★★★</div>
           <p>"Live grill ke samne baith ke khana ek alag hi vibe hai. Steak was juicy, mash was creamy. 10/10 will come again!"</p>
           <div class="reviewer">
             <div class="avatar">HM</div>
             <div class="who"><b>Hassan M.</b><span>PECHS, Karachi</span></div>
           </div>
+        </div>
+
+        <!-- REVIEW 5 -->
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
           <p>"Birthday surprise plan ki thi yahan. Staff ne cake aur candles ka arrange kiya. Pod booking was totally worth it."</p>
@@ -598,16 +722,19 @@
             <div class="who"><b>Sana A.</b><span>Gulshan, Karachi</span></div>
           </div>
         </div>
+
+        <!-- REVIEW 6 -->
         <div class="review-card">
           <div class="review-stars">★★★★★</div>
           <p>"Lava cake is literally heaven. Crack kiya to chocolate river nikal aaya. Kids loved the sizzle sound from kitchen."</p>
           <div class="reviewer">
             <div class="avatar">BT</div>
             <div class="who"><b>Bilal T.</b><span>North Nazimabad, Karachi</span></div>
-           </div>
-          </div>
           </div>
         </div>
+
+      </div>
+    </div>
     <div class="review-dots" id="reviewDots"></div>
   </div>
 </section>
@@ -674,7 +801,7 @@
   <div class="wrap">
     <div class="footer-top">
       <a class="footer-logo" href="#top">
-        <img src="images/logo.png" alt="The Urban Grill Logo">
+        <img src="images/logo.png" alt="The Urban Grill Logo" onerror="this.style.display='none'">
         The Urban Grill
       </a>
       <div class="footer-cols">
@@ -713,12 +840,12 @@ window.addEventListener('scroll', () => {
 
 // Embers
 const embersContainer = document.getElementById('embers');
-for(let i=0; i<20; i++){
+for(let i = 0; i < 20; i++){
   const ember = document.createElement('div');
   ember.className = 'ember';
-  ember.style.left = Math.random()*100 + '%';
-  ember.style.animationDuration = (Math.random()*3 + 4) + 's';
-  ember.style.animationDelay = Math.random()*5 + 's';
+  ember.style.left = Math.random() * 100 + '%';
+  ember.style.animationDuration = (Math.random() * 3 + 4) + 's';
+  ember.style.animationDelay = Math.random() * 5 + 's';
   embersContainer.appendChild(ember);
 }
 
@@ -728,12 +855,102 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
       entry.target.classList.add('in');
-      if(entry.target.id === 'splitPhoto') entry.target.classList.add('in');
-      if(entry.target.id === 'timeline') entry.target.classList.add('in');
     }
   });
-}, {threshold: 0.15});
+}, { threshold: 0.15 });
 reveals.forEach(r => observer.observe(r));
+
+// ===== INTERACTIVE TIMELINE SLIDER =====
+const tlData = [
+  {
+    year: '2021',
+    desc: 'First flame lit in Clifton — two brothers, one grill, zero shortcuts.',
+    img: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=900&q=80',
+    tag: '2021 — First Flame'
+  },
+  {
+    year: '2022',
+    desc: '100 covers a night, regularly — word spread fast in Karachi.',
+    img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=900&q=80',
+    tag: '2022 — Growing Fast'
+  },
+  {
+    year: '2023',
+    desc: 'Menu expanded with new wood-fired specials — truffle pizza became a city favourite.',
+    img: 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=80',
+    tag: '2023 — Menu Evolved'
+  },
+  {
+    year: '2024',
+    desc: 'Private pods & live-fire grill added — the experience leveled up.',
+    img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80',
+    tag: '2024 — The Upgrade'
+  },
+  {
+    year: '2025',
+    desc: 'Rated #1 steakhouse in Karachi — 4.9★ on Google with 2,000+ reviews.',
+    img: 'https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?auto=format&fit=crop&w=900&q=80',
+    tag: '2025 — #1 in Karachi'
+  },
+  {
+    year: '2026',
+    desc: '300+ guests served daily — and we still won\'t cut corners.',
+    img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80',
+    tag: '2026 — Still Going Strong'
+  }
+];
+
+const tlSlides = document.querySelectorAll('.tl-slide');
+const tlYearBtns = document.querySelectorAll('.tl-year-btn');
+const tlPrev = document.getElementById('tlPrev');
+const tlNext = document.getElementById('tlNext');
+const storyImg = document.getElementById('storyImg');
+const storyTag = document.getElementById('storyTag');
+let tlCurrent = 0;
+
+function goToTl(newIdx, direction) {
+  const oldSlide = tlSlides[tlCurrent];
+  const newSlide = tlSlides[newIdx];
+
+  // Exit old slide text
+  oldSlide.classList.remove('active');
+  oldSlide.classList.add(direction === 'next' ? 'exit-left' : 'exit-right');
+  setTimeout(() => oldSlide.classList.remove('exit-left', 'exit-right'), 350);
+
+  // Enter new slide text
+  newSlide.style.transform = direction === 'next' ? 'translateX(30px)' : 'translateX(-30px)';
+  newSlide.classList.add('active');
+
+  // Year buttons highlight
+  tlYearBtns.forEach((btn, i) => btn.classList.toggle('active', i === newIdx));
+
+  // === PHOTO CHANGE ===
+  storyImg.classList.add('fade-out');
+  storyTag.style.opacity = '0';
+  setTimeout(() => {
+    storyImg.src = tlData[newIdx].img;
+    storyImg.alt = tlData[newIdx].tag;
+    storyTag.textContent = tlData[newIdx].tag;
+    storyImg.classList.remove('fade-out');
+    storyTag.style.opacity = '1';
+  }, 350);
+
+  tlCurrent = newIdx;
+  tlPrev.disabled = tlCurrent === 0;
+  tlNext.disabled = tlCurrent === tlSlides.length - 1;
+}
+
+tlPrev.addEventListener('click', () => {
+  if(tlCurrent > 0) goToTl(tlCurrent - 1, 'prev');
+});
+tlNext.addEventListener('click', () => {
+  if(tlCurrent < tlSlides.length - 1) goToTl(tlCurrent + 1, 'next');
+});
+tlYearBtns.forEach((btn, i) => {
+  btn.addEventListener('click', () => {
+    if(i !== tlCurrent) goToTl(i, i > tlCurrent ? 'next' : 'prev');
+  });
+});
 
 // Steak card tilt
 const steakCard = document.getElementById('steakPhoto');
@@ -761,7 +978,7 @@ const expObserver = new IntersectionObserver((entries) => {
       setTimeout(() => entry.target.classList.add('in'), idx * 120);
     }
   });
-}, {threshold: 0.2});
+}, { threshold: 0.2 });
 expItems.forEach(item => expObserver.observe(item));
 
 // Counter
@@ -780,34 +997,38 @@ const updateCounter = () => {
 };
 const counterObserver = new IntersectionObserver((entries) => {
   if(entries[0].isIntersecting) updateCounter();
-}, {threshold: 0.5});
+}, { threshold: 0.5 });
 if(counter) counterObserver.observe(counter);
 
-// Reviews carousel
+// ===== REVIEWS CAROUSEL FIX =====
 const track = document.getElementById('reviewTrack');
-const dots = document.getElementById('reviewDots');
-if(track && dots){
-  const cards = track.children.length;
+const dotsContainer = document.getElementById('reviewDots');
+
+if(track && dotsContainer){
+  const cards = track.querySelectorAll('.review-card');
+  const totalCards = cards.length;
   let currentSlide = 0;
 
-  for(let i=0; i<cards; i++){
+  // Dots banao
+  for(let i = 0; i < totalCards; i++){
     const dot = document.createElement('button');
     if(i === 0) dot.classList.add('active');
     dot.addEventListener('click', () => goToSlide(i));
-    dots.appendChild(dot);
+    dotsContainer.appendChild(dot);
   }
 
   function goToSlide(n){
     currentSlide = n;
-    const cardWidth = track.children[0].offsetWidth + 24;
+    const cardWidth = cards[0].offsetWidth + 24; // gap 24px
     track.style.transform = `translateX(${-currentSlide * cardWidth}px)`;
-    [...dots.children].forEach((dot, i) => {
+    [...dotsContainer.children].forEach((dot, i) => {
       dot.classList.toggle('active', i === currentSlide);
     });
   }
 
+  // Auto-play
   setInterval(() => {
-    currentSlide = (currentSlide + 1) % cards;
+    currentSlide = (currentSlide + 1) % totalCards;
     goToSlide(currentSlide);
   }, 5000);
 }
@@ -820,14 +1041,14 @@ if(form){
     form.classList.add('popped');
     setTimeout(() => form.classList.remove('popped'), 400);
 
-    for(let i=0; i<30; i++){
+    for(let i = 0; i < 30; i++){
       const confetti = document.createElement('div');
       confetti.className = 'confetti-piece';
-      confetti.style.left = Math.random()*100 + '%';
-      confetti.style.width = Math.random()*8 + 4 + 'px';
-      confetti.style.height = Math.random()*8 + 4 + 'px';
-      confetti.style.background = ['#C2410C', '#E2580F', '#C8932A', '#166534'][Math.floor(Math.random()*4)];
-      confetti.style.animation = `confetti-fall ${Math.random()*2 + 2}s ease-out forwards`;
+      confetti.style.left = Math.random() * 100 + '%';
+      confetti.style.width = Math.random() * 8 + 4 + 'px';
+      confetti.style.height = Math.random() * 8 + 4 + 'px';
+      confetti.style.background = ['#C2410C','#E2580F','#C8932A','#166534'][Math.floor(Math.random() * 4)];
+      confetti.style.animation = `confetti-fall ${Math.random() * 2 + 2}s ease-out forwards`;
       form.appendChild(confetti);
       setTimeout(() => confetti.remove(), 3000);
     }
